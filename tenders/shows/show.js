@@ -16,8 +16,8 @@ function(doc, req) {
     if (!data) 
       return {code:404};
 
-    delete data._id;
-    delete data._rev;
+    data._id && delete data._id;
+    data._rev && delete data._rev;
     return {
       json: {data:data}
     };
