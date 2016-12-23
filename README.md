@@ -37,9 +37,8 @@ http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/
 #### To get current bid by id
 http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?bid_id=806fb3027fb04be38ef375a457a58fbe
 
-
 #### To get current document of bid
-
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?bid_id=08ab6cea15304ea5be63fe2981291075&document_id=3dcf5f582a764cbd8c19e02a1dfcc2a7
 
 #### To get all awards
 http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?award_id=*
@@ -49,7 +48,7 @@ http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/
 
 
 #### To get current doucment of award
-
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?award_id=24ce627bf67b4b449ec4b67bd0dcfa0c&document_id=f0eb8cd489994dac9a645838b2df8aa1
 
 #### To get all contracts
 http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?contract_id=*
@@ -59,7 +58,7 @@ http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/
 
 
 #### To get current document of contract
-
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?contract_id=6ce50bc9eed44b8e9b4f9803bed8c1a8&document_id=4cb0e9e441794d78ac8000eddbd8b40a
 
 
 
