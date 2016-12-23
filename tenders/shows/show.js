@@ -15,13 +15,16 @@ function(doc, req) {
   function formatResponse(data){
     if (!data) 
       return {code:404};
+
+    delete data._id;
+    delete data._rev;
     return {
       json: {data:data}
     };
   }
 
   if (!doc)
-    return formatResponse(doc);
+    return formatResponse();
 
   if (req.query.document_id){
     for(key in doc.documents){
