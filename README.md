@@ -1,9 +1,8 @@
 # Instructions
 
 ### Install couchapp
- ```
- pip install couchapp
- ```
+##### Insttructions for installation
+https://github.com/couchapp/couchapp#installation
 ##### couchapp tutorial  
 http://couchapp.readthedocs.io/en/latest/couchapp/gettingstarted.html
 
@@ -13,7 +12,12 @@ git clone https://github.com/Zavorotyuk/couch.git
 ```
 ### Push to couchdb
 
-To save your local changes, use command ```couchapp push <db address>```
+To save your local changes, use command
+
+```
+cd couch
+couchapp push "your db address here"
+```
 # Display data
 
 ## Get tenders by_dateModified
