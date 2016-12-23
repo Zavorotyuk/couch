@@ -19,23 +19,73 @@ cd couch
 couchapp push "your db address here"
 ```
 # Display data
+## Show functions
+### Tenders
 
-## Get tenders by_dateModified
+#### To get tender
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6
 
-#### To get list of tenders as JSON (limit 100)
+#### To get all documents
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?document_id=*
+
+#### To get current document by id
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?document_id=29999b03950e4bb2a267efa401356d3a
+
+#### To get all bids
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?bid_id=*
+
+#### To get current bid by id
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?bid_id=806fb3027fb04be38ef375a457a58fbe
+
+
+#### To get current document of bid
+
+
+#### To get all awards
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?award_id=*
+
+#### To get current award by id
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?award_id=24ce627bf67b4b449ec4b67bd0dcfa0c
+
+
+#### To get current doucment of award
+
+
+#### To get all contracts
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?contract_id=*
+
+#### To get current contract by id
+http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?contract_id=6ce50bc9eed44b8e9b4f9803bed8c1a8
+
+
+#### To get current document of contract
+
+
+
+
+
+
+
+
+
+## List functions
+### Tenders
+#### Get tenders by_dateModified
+
+##### To get list of tenders as JSON (limit 100)
 
 curl --noproxy -x GET http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_list/basicJSON/by_dateModified?limit=100
 
-### To get list of tenders with start key
+##### To get list of tenders with start key
 curl --noproxy -x GET http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_list/basicJSON/by_dateModified?limit=100&start_key=%222015-02-08T15:18:00.547349+02:00%22
 
 
-## Get tenders by_local_seq
+#### Get tenders by_local_seq
 
-#### To get list of tenders as JSON (limit 100)
+##### To get list of tenders as JSON (limit 100)
 
 curl --noproxy -x GET http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_list/localSeq/by_local_seq?limit=100
 
-#### To get list of tenders with start key
+##### To get list of tenders with start key
 
 curl --noproxy -x GET http://cygnet.office.quintagroup.com:10000/public_edge_db/_design/tenders/_list/localSeq/by_local_seq?limit=100&start_key=14
