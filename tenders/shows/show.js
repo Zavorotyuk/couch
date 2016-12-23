@@ -15,7 +15,6 @@ function(doc, req) {
   function formatResponse(data){
     if (!data) 
       return {code:404};
-
     data._id && delete data._id;
     data._rev && delete data._rev;
     return {
@@ -26,19 +25,22 @@ function(doc, req) {
   if (!doc)
     return formatResponse();
 
-  if (req.query.document_id){
-    if(req.query.document_id == "*")
-      return formatResponse(doc.documents);
-
-    for(key in doc.documents){
-      if(doc.documents[key].id === req.query.document_id)
-        return formatResponse(doc.documents[key]);
+  if (req.query.bid_id && req.query.document_id){
+    for(key in doc.bids){
+      if(doc.bids[key].id === req.query.bid_id){
+        if("*" == req.query.document_id)
+          return formatResponse(doc.bids[key].documents);
+        for(key2 in doc.bids[key].documents){
+          if(doc.bids[key].documents[key2].id === req.query.document_id)
+            return formatResponse(doc.bids[key].documents[key2]);
+        }
+      }
     }
     return formatResponse();
   }
 
   if (req.query.bid_id){
-    if(req.query.bid_id == "*")
+    if("*" == req.query.bid_id)
       return formatResponse(doc.bids);
 
     for(key in doc.bids){
@@ -48,19 +50,22 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.bid_id && req.query.document_id){
-    for(key in doc.bids){
-      if(doc.bids[key].id === req.query.bid_id)
-        for(key2 in doc.bids[key].documents){
-          if(doc.bids[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.bids[key].documents[key2]);
+  if (req.query.award_id && req.query.document_id){
+    for(key in doc.awards){
+      if(doc.awards[key].id === req.query.award_id){
+        if("*" == req.query.document_id)
+          return formatResponse(doc.awards[key].documents);
+        for(key2 in doc.awards[key].documents){
+          if(doc.awards[key].documents[key2].id === req.query.document_id)
+            return formatResponse(doc.awards[key].documents[key2]);
         }
+      }
     }
     return formatResponse();
   }
 
   if (req.query.award_id){
-    if(req.query.award_id == "*")
+    if("*" == req.query.award_id)
       return formatResponse(doc.awards);
 
     for(key in doc.awards){
@@ -70,19 +75,22 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.award_id && req.query.document_id){
-    for(key in doc.awards){
-      if(doc.awards[key].id === req.query.award_id)
-        for(key2 in doc.awards[key].documents){
-          if(doc.awards[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.awards[key].documents[key2]);
+  if (req.query.contract_id && req.query.document_id){
+    for(key in doc.contracts){
+      if(doc.contracts[key].id === req.query.contract_id){
+        if("*" == req.query.document_id)
+          return formatResponse(doc.contracts[key].documents);
+        for(key2 in doc.contracts[key].documents){
+          if(doc.contracts[key].documents[key2].id === req.query.document_id)
+            return formatResponse(doc.contracts[key].documents[key2]);
         }
+      }
     }
     return formatResponse();
   }
 
   if (req.query.contract_id){
-    if(req.query.contract_id == "*")
+    if("*" == req.query.contract_id)
       return formatResponse(doc.contracts);
 
     for(key in doc.contracts){
@@ -92,13 +100,13 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.contract_id && req.query.document_id){
-    for(key in doc.contracts){
-      if(doc.contracts[key].id === req.query.contract_id)
-        for(key2 in doc.contracts[key].documents){
-          if(doc.contracts[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.contracts[key].documents[key2]);
-        }
+  if (req.query.document_id){
+    if("*" == req.query.document_id)
+      return formatResponse(doc.documents);
+
+    for(key in doc.documents){
+      if(doc.documents[key].id === req.query.document_id)
+        return formatResponse(doc.documents[key]);
     }
     return formatResponse();
   }
