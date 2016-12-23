@@ -27,14 +27,20 @@ function(doc, req) {
     return formatResponse();
 
   if (req.query.document_id){
+    if(req.query.document_id == "*")
+      return formatResponse(doc.documents);
+
     for(key in doc.documents){
-    if(doc.documents[key].id === req.query.document_id)
-      return formatResponse(doc.documents[key]);
+      if(doc.documents[key].id === req.query.document_id)
+        return formatResponse(doc.documents[key]);
     }
     return formatResponse();
   }
 
   if (req.query.bid_id){
+    if(req.query.bid_id == "*")
+      return formatResponse(doc.bids);
+
     for(key in doc.bids){
       if(doc.bids[key].id === req.query.bid_id)
         return formatResponse(doc.bids[key]);
@@ -54,6 +60,9 @@ function(doc, req) {
   }
 
   if (req.query.award_id){
+    if(req.query.award_id == "*")
+      return formatResponse(doc.awards);
+
     for(key in doc.awards){
       if(doc.awards[key].id === req.query.award_id)
         return formatResponse(doc.awards[key]);
@@ -73,6 +82,9 @@ function(doc, req) {
   }
 
   if (req.query.contract_id){
+    if(req.query.contract_id == "*")
+      return formatResponse(doc.contracts);
+
     for(key in doc.contracts){
       if(doc.contracts[key].id === req.query.contract_id)
         return formatResponse(doc.contracts[key]);
