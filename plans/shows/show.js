@@ -38,10 +38,5 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if(req.query.revisions) {
-    if("*" == req.query.revisions)
-    return formatResponse(doc._revisions);
-  }
-
   return formatResponse(doc);
 }

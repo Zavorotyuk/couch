@@ -83,8 +83,6 @@ db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9
 #### To get current document by id
 db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9?document_id=50e05646c51343b5bd51c2e3caceef90
 
-#### To get revisions
-db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9?revisions=*
 
 ## List functions
 ### Tenders
