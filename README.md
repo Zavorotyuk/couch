@@ -61,9 +61,16 @@ db_path/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920
 db_path/public_edge_db/_design/tenders/_show/show/0000058354d443a8a7b988198a1920c6?contract_id=6ce50bc9eed44b8e9b4f9803bed8c1a8&document_id=4cb0e9e441794d78ac8000eddbd8b40a
 
 
+### Contracts
 
+#### To get contract
+db_path/public_edge_db/_design/contracts/_show/show/6c9acc953ab843c5938c5fe287ee4cfe
 
+#### To get all documents in contract
+db_path/public_edge_db/_design/contracts/_show/show/6c9acc953ab843c5938c5fe287ee4cfe?document_id=*
 
+#### To get current document by id
+db_path/public_edge_db/_design/contracts/_show/show/6c9acc953ab843c5938c5fe287ee4cfe?document_id=f6745802aa324f08832e3384f4f1f11d
 
 
 
