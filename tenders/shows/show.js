@@ -10,7 +10,8 @@
  **/
 
 function(doc, req) {
-  var key, key2;
+  var id = req.query.document_id;
+  var key;
 
   function formatResponse(data){
     if (!data) 
@@ -22,19 +23,26 @@ function(doc, req) {
     };
   }
 
+  /*TODO write getKey function*/
+  function getDocuments(id, obj){
+    var key;
+
+    if("*" == id)
+      return formatResponse(obj.documents);
+    for(key in obj.documents){
+      if(obj.documents[key].id === id)
+        return formatResponse(obj.documents[key]);
+    }
+    return formatResponse();
+  }
+
   if (!doc)
     return formatResponse();
 
-  if (req.query.bid_id && req.query.document_id){
+  if (req.query.bid_id && id){
     for(key in doc.bids){
-      if(doc.bids[key].id === req.query.bid_id){
-        if("*" == req.query.document_id)
-          return formatResponse(doc.bids[key].documents);
-        for(key2 in doc.bids[key].documents){
-          if(doc.bids[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.bids[key].documents[key2]);
-        }
-      }
+      if(doc.bids[key].id === req.query.bid_id)
+        return getDocuments(id, doc.bids);
     }
     return formatResponse();
   }
@@ -50,16 +58,10 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.award_id && req.query.document_id){
+  if (req.query.award_id && id){
     for(key in doc.awards){
-      if(doc.awards[key].id === req.query.award_id){
-        if("*" == req.query.document_id)
-          return formatResponse(doc.awards[key].documents);
-        for(key2 in doc.awards[key].documents){
-          if(doc.awards[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.awards[key].documents[key2]);
-        }
-      }
+      if(doc.awards[key].id === req.query.award_id)
+        return getDocuments(id, doc.awards);
     }
     return formatResponse();
   }
@@ -75,16 +77,10 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.contract_id && req.query.document_id){
+  if (req.query.contract_id && id){
     for(key in doc.contracts){
-      if(doc.contracts[key].id === req.query.contract_id){
-        if("*" == req.query.document_id)
-          return formatResponse(doc.contracts[key].documents);
-        for(key2 in doc.contracts[key].documents){
-          if(doc.contracts[key].documents[key2].id === req.query.document_id)
-            return formatResponse(doc.contracts[key].documents[key2]);
-        }
-      }
+      if(doc.contracts[key].id === req.query.contract_id)
+        return getDocuments(id, doc.contracts);
     }
     return formatResponse();
   }
@@ -100,16 +96,8 @@ function(doc, req) {
     return formatResponse();
   }
 
-  if (req.query.document_id){
-    if("*" == req.query.document_id)
-      return formatResponse(doc.documents);
-
-    for(key in doc.documents){
-      if(doc.documents[key].id === req.query.document_id)
-        return formatResponse(doc.documents[key]);
-    }
-    return formatResponse();
-  }
+  if (id)
+    return getDocuments(id, doc);
 
   return formatResponse(doc);
 }
