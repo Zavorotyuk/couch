@@ -72,7 +72,19 @@ db_path/public_edge_db/_design/contracts/_show/show/6c9acc953ab843c5938c5fe287ee
 #### To get current document by id
 db_path/public_edge_db/_design/contracts/_show/show/6c9acc953ab843c5938c5fe287ee4cfe?document_id=f6745802aa324f08832e3384f4f1f11d
 
+### Plans
 
+#### To get plan
+db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9
+
+#### To get all documents in plan
+db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9?document_id=*
+
+#### To get current document by id
+db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9?document_id=50e05646c51343b5bd51c2e3caceef90
+
+#### To get revisions
+db_path/public_edge_db/_design/plans/_show/show/918bd2147035448985c0cddc0423d0b9?revisions=*
 
 ## List functions
 ### Tenders
