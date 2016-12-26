@@ -27,25 +27,6 @@ function(doc, req) {
 
 
 
-  if (req.query.change_id){
-    if("*" == req.query.change_id)
-      return formatResponse(doc.changes);
-
-    for(key in doc.changes){
-      if(doc.changes[key].id === req.query.change_id)
-        return formatResponse(doc.changes[key]);
-    }
-    return formatResponse();
-  }
-
-
-
-  if (req.query.credentail_id){
-    if("*" == req.query.credentail_id)
-      return formatResponse(doc.credentials);
-  }
-
-
   if (req.query.document_id){
     if("*" == req.query.document_id)
       return formatResponse(doc.documents);
