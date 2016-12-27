@@ -10,97 +10,92 @@
  **/
 
 function(doc, req) {
-  var id = req.query.document_id;
-  var key;
+  var ALL = "*";
+  var SCHEMA = {
+    awards: {
+      id: req.query.award_id,
+      complaints: {
+        id: req.query.complaint_id
+      }
+    },
+    bids: {
+      id: req.query.bids_id,
+      eligibility_documents: {
+        id: req.query.eligibility_documents
+      },
+      financial_documents: {
+        id: req.query.financial_documents
+      },
+      qualification_documents: {
+        id: req.query.qualification_documents
+      }
+    },
+    cancellations: {
+      id: req.query.cancellation_id
+    },
+    complaints: {
+      id: req.query.complaint_id
+    },
+    contracts: {
+      id: req.query.contract_id
+    },
+    lots: {
+      id: req.query.lot_id
+    },
+    qualifications: {
+      id: req.query.qualification_id,
+      complaints:{
+        id: req.query.complaint_id
+      }
+    },
+    questions:{
+        id: req.query.question_id
+      }
+  };
+  var FIELDS_TO_CLEAR = ['_id','_rev', '_revisions', 'doc_type'];
 
-  function formatResponse(data){
+  function getField(schema, obj) {
+    var key, arrKey;
+
+    for (key in schema){
+      if (ALL == schema[key].id) return obj[key];
+      if(schema[key].id) {
+        for (arrKey in obj[key]) {
+          if (obj[key][arrKey].id === schema[key].id) 
+            return getField(schema[key], obj[key][arrKey])
+        }
+        return;
+      }
+    }
+
+    if (req.query.document_id) {
+      if (ALL == req.query.document_id) return obj.documents;
+      for (key in obj.documents) {
+        if (obj.documents[key].id === req.query.document_id)
+          return obj.documents[key];
+      }
+      return;
+    }
+
+    return obj;
+  }
+
+  function formatResponse(data) {
     if (!data) 
       return {code:404};
-    data._id && delete data._id;
-    data._rev && delete data._rev;
+
+    clearFields(data);
+    
     return {
       json: {data:data}
     };
   }
 
-  function getDocuments(obj){
+  function clearFields(data) {
     var key;
-
-    if("*" == id)
-      return formatResponse(obj.documents);
-    for(key in obj.documents){
-      if(obj.documents[key].id === id)
-        return formatResponse(obj.documents[key]);
-    }
-    return formatResponse();
+    for (key in FIELDS_TO_CLEAR)
+      data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
 
-  function getProperty(property, obj){
-
-  }
-
-  if (!doc)
-    return formatResponse();
-
-  if (req.query.bid_id && id){
-    for(key in doc.bids){
-      if(doc.bids[key].id === req.query.bid_id)
-        return getDocuments(doc.bids[key]);
-    }
-    return formatResponse();
-  }
-
-  if (req.query.bid_id){
-    if("*" == req.query.bid_id)
-      return formatResponse(doc.bids);
-
-    for(key in doc.bids){
-      if(doc.bids[key].id === req.query.bid_id)
-        return formatResponse(doc.bids[key]);
-    }
-    return formatResponse();
-  }
-
-  if (req.query.award_id && id){
-    for(key in doc.awards){
-      if(doc.awards[key].id === req.query.award_id)
-        return getDocuments(doc.awards[key]);
-    }
-    return formatResponse();
-  }
-
-  if (req.query.award_id){
-    if("*" == req.query.award_id)
-      return formatResponse(doc.awards);
-
-    for(key in doc.awards){
-      if(doc.awards[key].id === req.query.award_id)
-        return formatResponse(doc.awards[key]);
-    }
-    return formatResponse();
-  }
-
-  if (req.query.contract_id && id){
-    for(key in doc.contracts){
-      if(doc.contracts[key].id === req.query.contract_id)
-        return getDocuments(doc.contracts[key]);
-    }
-    return formatResponse();
-  }
-
-  if (req.query.contract_id){
-    if("*" == req.query.contract_id)
-      return formatResponse(doc.contracts);
-
-    for(key in doc.contracts){
-      if(doc.contracts[key].id === req.query.contract_id)
-        return formatResponse(doc.contracts[key]);
-    }
-    return formatResponse();
-  }
-
-  if (id)
-    return getDocuments(doc);
-
-  return formatResponse(doc);
+  return formatResponse( getField(SCHEMA, doc) );
 }
