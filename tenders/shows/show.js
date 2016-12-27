@@ -19,7 +19,7 @@ function(doc, req) {
       }
     },
     bids: {
-      id: req.query.bids_id,
+      id: req.query.bid_id,
       eligibility_documents: {
         id: req.query.eligibility_documents
       },
