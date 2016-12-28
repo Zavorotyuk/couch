@@ -20,13 +20,13 @@ function(doc, req) {
     },
     bids: {
       id: req.query.bid_id,
-      eligibility_documents: {
+      eligibilityDocuments: {
         id: req.query.eligibility_documents
       },
-      financial_documents: {
+      financialDocuments: {
         id: req.query.financial_documents
       },
-      qualification_documents: {
+      qualificationDocuments: {
         id: req.query.qualification_documents
       }
     },
