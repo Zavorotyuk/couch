@@ -21,13 +21,13 @@ function(doc, req) {
     bids: {
       id: req.query.bid_id,
       eligibilityDocuments: {
-        id: req.query.eligibility_documents
+        id: req.query.eligibility_document
       },
       financialDocuments: {
-        id: req.query.financial_documents
+        id: req.query.financial_document
       },
       qualificationDocuments: {
-        id: req.query.qualification_documents
+        id: req.query.qualification_document
       }
     },
     cancellations: {
@@ -69,12 +69,9 @@ function(doc, req) {
     }
 
     if (req.query.document_id) {
-      if (ALL == req.query.document_id) return obj.documents;
-      for (key in obj.documents) {
-        if (obj.documents[key].id === req.query.document_id)
-          return obj.documents[key];
-      }
-      return;
+      if (ALL == req.query.document_id) 
+        return groupDocuments(obj.documents);
+      return getLastDoc(obj.documents, req.query.document_id);
     }
 
     return obj;
@@ -90,6 +87,40 @@ function(doc, req) {
       json: {data:data}
     };
   }
+
+  function groupDocuments(docs){
+    var result = [];
+    var unic = {};
+    var key;
+
+    docs.forEach(function(item, i) {
+      if (!unic[item.id] || 
+          Date.parse(docs[unic[item.id]].dateModified) <
+          Date.parse(item.dateModified)
+        )
+        unic[item.id] = i;
+    });
+    for (key in unic)
+      result.push(docs[unic[key]]);
+
+    return result;
+  }
+
+  function getLastDoc(docs, id) {
+    var allDocs = [],
+        length = docs.length;
+    var result;
+
+    for(;length--;)
+      if (docs[length].id === id) allDocs.push(docs[length]);
+
+    result = allDocs.length ? allDocs[0] : null;
+    if (allDocs.length > 1) 
+      result.previousVersions = allDocs.slice(1);
+
+    return result;
+  }
+
 
   function clearFields(data) {
     var key;
