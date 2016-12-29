@@ -45,7 +45,7 @@ function(doc, req) {
     qualifications: {
       id: req.query.qualification_id,
       complaints:{
-        id: req.query.complaint_id
+        id: req.query.q_complaint_id
       }
     },
     questions:{
@@ -84,7 +84,8 @@ function(doc, req) {
     clearFields(data);
     
     return {
-      json: {data:data}
+      body: JSON.stringify({data:data}),
+      headers: {"Content-Type": "text/plain; charset=utf-8"}
     };
   }
 
