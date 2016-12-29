@@ -12,16 +12,23 @@
 function(doc, req) {
   var key, key2;
 
-  function formatResponse(data){
+  var FIELDS_TO_CLEAR = ['_id','_rev', '_revisions', 'doc_type'];
+
+  function formatResponse(data) {
     if (!data)
       return {code:404};
-    data._id && delete data._id;
-    data._rev && delete data._rev;
+    clearFields(data);
     return {
       json: {data:data}
     };
   }
 
+  function clearFields(data) {
+    var key;
+    for (key in FIELDS_TO_CLEAR)
+      data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
+  }
+  
   if (!doc)
     return formatResponse();
 
