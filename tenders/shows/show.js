@@ -102,11 +102,10 @@ function(doc, req) {
     for (key in unic)
       result.push(docs[unic[key]]);
 
-    for (i=0;i<result.length;i++) {
-      if(result[i].confidentiality == "buyerOnly") {
-        result[i].url && delete result[i].url
-      }
-    };
+    var size = result.length;
+    for(;size--;) {
+      hideUrl(result[size]);
+    }
 
     return result;
   }
@@ -123,14 +122,17 @@ function(doc, req) {
     if (allDocs.length > 1)
       result.previousVersions = allDocs.slice(1);
 
-    if(result.confidentiality == "buyerOnly") {
-      result.url && delete result.url
-    }
-    
+    hideUrl(result);
+
     return result;
 
   }
 
+  function hideUrl(doc) {
+    if (doc.confidentiality == "buyerOnly") {
+      doc.url && delete doc.url
+    }
+  }
 
   function clearFields(data) {
     var key;
