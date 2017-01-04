@@ -80,10 +80,11 @@ function(doc, req) {
     var key;
 
     docs.forEach(function(item, i) {
-      var id = unic[item.id];
-      if (!id || Date.parse(docs[id].dateModified) <
-          Date.parse(item.dateModified))
-        id = i;
+      if (!unic[item.id] ||
+           Date.parse(docs[unic[item.id]].dateModified) <
+           Date.parse(item.dateModified)
+         )
+         unic[item.id] = i;
     });
     for (key in unic)
       result.push(docs[unic[key]]);
