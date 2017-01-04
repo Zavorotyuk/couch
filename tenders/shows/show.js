@@ -61,15 +61,14 @@ function(doc, req) {
       if (ALL == schema[key].id) return obj[key];
       if(schema[key].id) {
         for (arrKey in obj[key]) {
-          if (obj[key][arrKey].id === schema[key].id) 
+          if (obj[key][arrKey].id === schema[key].id)
             return getField(schema[key], obj[key][arrKey])
         }
         return;
       }
     }
-
     if (req.query.document_id) {
-      if (ALL == req.query.document_id) 
+      if (ALL == req.query.document_id)
         return groupDocuments(obj.documents);
       return getLastDoc(obj.documents, req.query.document_id);
     }
@@ -78,11 +77,11 @@ function(doc, req) {
   }
 
   function formatResponse(data) {
-    if (!data) 
+    if (!data)
       return {code:404};
 
     clearFields(data);
-    
+
     return {
       body: JSON.stringify({data:data}),
       headers: {"Content-Type": "text/plain; charset=utf-8"}
@@ -95,10 +94,11 @@ function(doc, req) {
     var key;
 
     docs.forEach(function(item, i) {
-      var id = unic[item.id];
-      if (!id || Date.parse(docs[id].dateModified) <
-          Date.parse(item.dateModified)) 
-        id = i;
+      if (!unic[item.id] ||
+           Date.parse(docs[unic[item.id]].dateModified) <
+           Date.parse(item.dateModified)
+         )
+         unic[item.id] = i;
     });
     for (key in unic)
       result.push(docs[unic[key]]);
@@ -115,7 +115,7 @@ function(doc, req) {
       if (docs[length].id === id) allDocs.push(docs[length]);
 
     result = allDocs.length ? allDocs[0] : null;
-    if (allDocs.length > 1) 
+    if (allDocs.length > 1)
       result.previousVersions = allDocs.slice(1);
 
     return result;
