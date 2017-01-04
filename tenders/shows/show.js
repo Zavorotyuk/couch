@@ -72,8 +72,6 @@ function(doc, req) {
         return groupDocuments(obj.documents);
       return getLastDoc(obj.documents, req.query.document_id);
     }
-
-
     return obj;
   }
 
@@ -90,10 +88,9 @@ function(doc, req) {
   }
 
   function groupDocuments(docs){
-    var i;
     var result = [];
     var unic = {};
-    var key;
+    var key, i;
 
     docs.forEach(function(item, i) {
       if (!unic[item.id] ||
@@ -109,8 +106,8 @@ function(doc, req) {
       if(result[i].confidentiality == "buyerOnly") {
         result[i].url && delete result[i].url
       }
-      // if(item.confidentiality == "buyerOnly") {/*item.url && delete item.url*/return "dddd"};
     };
+
     return result;
   }
 
@@ -125,9 +122,11 @@ function(doc, req) {
     result = allDocs.length ? allDocs[0] : null;
     if (allDocs.length > 1)
       result.previousVersions = allDocs.slice(1);
+
     if(result.confidentiality == "buyerOnly") {
       result.url && delete result.url
     }
+    
     return result;
 
   }
