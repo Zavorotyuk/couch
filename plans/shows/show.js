@@ -10,7 +10,8 @@
  **/
 
 function(doc, req) {
-  var key, key2;
+  var key;
+  var ALL = "*";
 
   var FIELDS_TO_CLEAR = ['_id','_rev', '_revisions', 'doc_type'];
 
