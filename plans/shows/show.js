@@ -17,9 +17,12 @@ function(doc, req) {
   function formatResponse(data) {
     if (!data)
       return {code:404};
+
     clearFields(data);
+
     return {
-      json: {data:data}
+      body: JSON.stringify({data:data}),
+      headers: {"Content-Type": "text/plain; charset=utf-8"}
     };
   }
 
@@ -28,7 +31,7 @@ function(doc, req) {
     for (key in FIELDS_TO_CLEAR)
       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
-  
+
   if (!doc)
     return formatResponse();
 
