@@ -9,44 +9,77 @@
  * @returns {object} Response Object. http://docs.couchdb.org/en/latest/json-structure.html#response-object
  **/
 
-function(doc, req) {
-  var key, key2;
+ function(doc, req) {
+   var key, key2;
 
-  var FIELDS_TO_CLEAR = ['_id','_rev', '_revisions', 'doc_type'];
-
-  function formatResponse(data) {
-    if (!data)
-      return {code:404};
-
-    clearFields(data);
-
-    return {
-      body: JSON.stringify({data:data}),
-      headers: {"Content-Type": "text/plain; charset=utf-8"}
-    };
-  }
-
-  function clearFields(data) {
-    var key;
-    for (key in FIELDS_TO_CLEAR)
-      data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
-  }
-
-  if (!doc)
-    return formatResponse();
+   var FIELDS_TO_CLEAR = ['_id','_rev', '_revisions', 'doc_type'];
 
 
+   function getField(obj) {
+     if (req.query.document_id) {
+       if (ALL == req.query.document_id)
+         return groupDocuments(obj.documents);
+       return getLastDoc(obj.documents, req.query.document_id);
+     }
+     return obj;
+   }
 
-  if (req.query.document_id){
-    if("*" == req.query.document_id)
-      return formatResponse(doc.documents);
+   function formatResponse(data) {
+     if (!data)
+       return {code:404};
 
-    for(key in doc.documents){
-      if(doc.documents[key].id === req.query.document_id)
-        return formatResponse(doc.documents[key]);
-    }
-    return formatResponse();
-  }
+     clearFields(data);
 
-  return formatResponse(doc);
+     return {
+       body: JSON.stringify({data:data}),
+       headers: {"Content-Type": "text/plain; charset=utf-8"}
+     };
+   }
+
+   function groupDocuments(docs){
+     var result = [];
+     var unic = {};
+     var key, i;
+
+     docs.forEach(function(item, i) {
+       if (!unic[item.id] ||
+            Date.parse(docs[unic[item.id]].dateModified) <
+            Date.parse(item.dateModified)
+          )
+          unic[item.id] = i;
+     });
+     for (key in unic)
+       result.push(docs[unic[key]]);
+
+     var size = result.length;
+     for(;size--;) {
+       hideUrl(result[size]);
+     }
+
+     return result;
+   }
+
+   function getLastDoc(docs, id) {
+     var allDocs = [],
+         length = docs.length;
+     var result;
+
+     for(;length--;)
+       if (docs[length].id === id) allDocs.push(docs[length]);
+
+     result = allDocs.length ? allDocs[0] : null;
+     if (allDocs.length > 1)
+       result.previousVersions = allDocs.slice(1);
+
+     return result;
+
+   }
+
+   function clearFields(data) {
+     var key;
+     for (key in FIELDS_TO_CLEAR)
+       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
+   }
+
+   return formatResponse( getField(doc) );
 }
