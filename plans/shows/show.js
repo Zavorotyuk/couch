@@ -52,11 +52,6 @@ function(doc, req) {
     for (key in unic)
       result.push(docs[unic[key]]);
 
-    var size = result.length;
-    for(;size--;) {
-      hideUrl(result[size]);
-    }
-
     return result;
   }
 
