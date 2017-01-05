@@ -27,5 +27,3 @@ curl --noproxy -x GET <db_path>/<db_name>/_design/<design_doc_name>/_show/show/<
 ```
 curl --noproxy -x GET <db_path>/<db_name>/_design/<design_doc_name>/_show/show/<document_id>?<your_query>
 ```
-
-curl --noproxy -x GET db_path/public_edge_db/_design/tenders/_list/localSeq/by_local_seq?limit=100&start_key=14
