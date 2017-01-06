@@ -79,58 +79,74 @@ function(doc, req) {
    var query = Object.keys(req.query);
 
 
-    return JSON.stringify(query[0]);
-
     switch(JSON.stringify(query)) {
       case "document_id":
         name = "document_id"
         break;
       case "award_id":
-        name = ""
+        name = "award_id"
         break;
-      case "document_id":
-        name = ""
+      case "complaint_id":
+        name = "complaint_id"
         break;
-      case "document_id":
-        name = ""
+      case "bid_id":
+        name = "bid_id"
         break;
-      case "document_id":
-        name = ""
+      case "eligibility_document":
+        name = "eligibility_document"
         break;
-      case "document_id":
-        name = ""
+      case "financial_document":
+        name = "financial_document"
         break;
-      case "document_id":
-        name = ""
+      case "qualification_document":
+        name = "qualification_document"
         break;
-      case "document_id":
-        name = ""
+      case "cancellation_id":
+        name = "cancellation_id"
+        break;
+      case "complaint_id":
+        name = "complaint_id"
+        break;
+      case "contract_id":
+        name = "contract_id"
+        break;
+      case "lot_id":
+        name = "lot_id"
+        break;
+      case "qualification_id":
+        name = "qualification_id"
+        break;
+      case "q_complaint_id":
+        name = "q_complaint_id"
+        break;
+      case "question_id":
+        name = "question_id"
         break;
       default:
         name = "something went wrong"
 }
 
 
-    //
-    //   return {
-    //     code: 404,
-    //     json: {
-    //         "status": "error",
-    //         "errors":[{
-    //             "location": "url",
-    //             "name": name,
-    //             "description": "Not found"
-    //         }]
-    //     }
-    //   };
-    //
 
-    //   clearFields(data);
-    //
-    // return {
-    //   body: JSON.stringify({data:data}),
-    //   headers: {"Content-Type": "text/plain; charset=utf-8"}
-    // };
+      return {
+        code: 404,
+        json: {
+            "status": "error",
+            "errors":[{
+                "location": "url",
+                "name": name,
+                "description": "Not found"
+            }]
+        }
+      };
+
+
+      clearFields(data);
+
+    return {
+      body: JSON.stringify({data:data}),
+      headers: {"Content-Type": "text/plain; charset=utf-8"}
+    };
   }
 
   function groupDocuments(docs){
