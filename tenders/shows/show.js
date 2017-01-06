@@ -75,31 +75,62 @@ function(doc, req) {
     return obj;
   }
 
-  function formatResponse(data, req) {
-    if (!data){
-      if (req.query.document_id)
-        var name = 'document_id';
-      else
-        var name = 'tender_id';
-      return {
-        code: 404,
-        json: {
-            "status": "error",
-            "errors":[{
-                "location": "url",
-                "name": name,
-                "description": "Not found"
-            }]
-        }
-      };
-    }
+  function formatResponse(data, req, schema) {
+   var query = Object.keys(req.query);
 
-      clearFields(data);
 
-    return {
-      body: JSON.stringify({data:data}),
-      headers: {"Content-Type": "text/plain; charset=utf-8"}
-    };
+    return JSON.stringify(query[0]);
+
+    switch(JSON.stringify(query)) {
+      case "document_id":
+        name = "document_id"
+        break;
+      case "award_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      case "document_id":
+        name = ""
+        break;
+      default:
+        name = "something went wrong"
+}
+
+
+    //
+    //   return {
+    //     code: 404,
+    //     json: {
+    //         "status": "error",
+    //         "errors":[{
+    //             "location": "url",
+    //             "name": name,
+    //             "description": "Not found"
+    //         }]
+    //     }
+    //   };
+    //
+
+    //   clearFields(data);
+    //
+    // return {
+    //   body: JSON.stringify({data:data}),
+    //   headers: {"Content-Type": "text/plain; charset=utf-8"}
+    // };
   }
 
   function groupDocuments(docs){
@@ -145,8 +176,10 @@ function(doc, req) {
   }
 
   function hideUrl(doc) {
-    if (doc.confidentiality == "buyerOnly") {
-      doc.url && delete doc.url
+    if(doc) {
+      if (doc.confidentiality == "buyerOnly") {
+        doc.url && delete doc.url
+      }
     }
   }
 
@@ -156,5 +189,5 @@ function(doc, req) {
       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
 
-  return formatResponse( getField(SCHEMA, doc), req );
+  return formatResponse( getField(SCHEMA, doc), req, SCHEMA );
 }
