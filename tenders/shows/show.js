@@ -75,11 +75,26 @@ function(doc, req) {
     return obj;
   }
 
-  function formatResponse(data) {
-    if (!data)
-      return {code:404};
+  function formatResponse(data, req) {
+    if (!data){
+      if (req.query.document_id)
+        var name = 'document_id';
+      else
+        var name = 'tender_id';
+      return {
+        code: 404,
+        json: {
+            "status": "error",
+            "errors":[{
+                "location": "url",
+                "name": name,
+                "description": "Not found"
+            }]
+        }
+      };
+    }
 
-    clearFields(data);
+      clearFields(data);
 
     return {
       body: JSON.stringify({data:data}),
@@ -91,39 +106,40 @@ function(doc, req) {
     var result = [];
     var unic = {};
     var key, i;
+    if(docs){
+      docs.forEach(function(item, i) {
+        if (!unic[item.id] ||
+             Date.parse(docs[unic[item.id]].dateModified) <
+             Date.parse(item.dateModified)
+           )
+           unic[item.id] = i;
+      });
+      for (key in unic)
+        result.push(docs[unic[key]]);
 
-    docs.forEach(function(item, i) {
-      if (!unic[item.id] ||
-           Date.parse(docs[unic[item.id]].dateModified) <
-           Date.parse(item.dateModified)
-         )
-         unic[item.id] = i;
-    });
-    for (key in unic)
-      result.push(docs[unic[key]]);
-
-    var size = result.length;
-    for(;size--;) {
-      hideUrl(result[size]);
+      var size = result.length;
+      for(;size--;) {
+        hideUrl(result[size]);
+      }
     }
-
     return result;
   }
 
   function getLastDoc(docs, id) {
-    var allDocs = [],
-        length = docs.length;
-    var result;
+    if(docs){
+      var allDocs = [],
+            length = docs.length;
+        var result;
 
-    for(;length--;)
-      if (docs[length].id === id) allDocs.push(docs[length]);
+        for(;length--;)
+          if (docs[length].id === id) allDocs.push(docs[length]);
 
-    result = allDocs.length ? allDocs[0] : null;
-    if (allDocs.length > 1)
-      result.previousVersions = allDocs.slice(1);
+        result = allDocs.length ? allDocs[0] : null;
+        if (allDocs.length > 1)
+          result.previousVersions = allDocs.slice(1);
 
-    hideUrl(result);
-
+        hideUrl(result);
+    }
     return result;
 
   }
@@ -140,5 +156,5 @@ function(doc, req) {
       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
 
-  return formatResponse( getField(SCHEMA, doc) );
+  return formatResponse( getField(SCHEMA, doc), req );
 }
