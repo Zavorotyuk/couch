@@ -204,11 +204,7 @@ function(doc, req) {
   }
 
   function hideUrl(doc) {
-    if(doc) {
-      if (doc.confidentiality == "buyerOnly") {
-        doc.url && delete doc.url
-      }
-    }
+    doc && ("buyerOnly" == doc.confidentiality) && doc.url && delete doc.url;
   }
 
   function clearFields(data) {
