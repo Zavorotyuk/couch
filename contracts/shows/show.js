@@ -27,8 +27,16 @@ function(doc, req) {
 ​
   function formatResponse(data) {
     if (!data){
-      if (req.query.document_id)
-        var name = 'document_id';
+
+      if (req.query.document_id) {
+        if(req.query.document_id == '*') {
+          return {
+            body: JSON.stringify({data:[]}),
+            headers: {"Content-Type": "text/plain; charset=utf-8"}
+          };
+        }
+         else var name = 'document_id';
+     }
       else
         var name = 'contract_id';
       return {

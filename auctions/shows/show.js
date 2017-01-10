@@ -67,6 +67,14 @@ function(doc, req) {
    var name;
   //  return JSON.stringify(query[0]);
   if(!data) {
+
+    if(req.query[query] == '*') {
+      return {
+        body: JSON.stringify({data:[]}),
+        headers: {"Content-Type": "text/plain; charset=utf-8"}
+      };
+    }
+    
     if(query.length > 0)
        query.length == 1 ? query = query[0] : query = query[query.length - 1]
 
