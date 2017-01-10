@@ -67,7 +67,14 @@ function(doc, req) {
    var name;
   //  return JSON.stringify(query[0]);
   if(!data) {
-    switch(query[0]) {
+    if(query.length > 0) {
+      if(query.length == 1) {
+        query = query[0];
+      } else {
+         query = query[query.length - 1]
+      }
+    }
+    switch(query) {
       case "document_id":
         name = "document_id"
         break;
