@@ -65,34 +65,18 @@ function(doc, req) {
   function formatResponse(data, req, schema) {
    var query = Object.keys(req.query);
    var name;
-  //  return JSON.stringify(query[0]);
   if(!data) {
-    switch(query[0]) {
-      case "document_id":
-        name = "document_id"
-        break;
-      case "award_id":
-        name = "award_id"
-        break;
-      case "bid_id":
-        name = "bid_id"
-        break;
-      case "cancellation_id":
-        name = "cancellation_id"
-        break;
-      case "complaint_id":
-        name = "complaint_id"
-        break;
-      case "contract_id":
-        name = "contract_id"
-        break;
-      case "lot_id":
-        name = "lot_id"
-        break;
-      case "question_id":
-        name = "question_id"
-        break;
-      default:
+    var key, arrKey;
+    for (key in schema){
+      if (query[0] == schema[key].id) {
+        name = shema[key].id
+      } else {
+          for (arrKey in schema[key]) {
+            if(query[0] == schema[key][arrKey].id) {
+              name = shema[key][arrKey];
+            }
+          }
+        }
     }
 
       return {
