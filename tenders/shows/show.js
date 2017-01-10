@@ -77,9 +77,10 @@ function(doc, req) {
 
   function formatResponse(data, req, schema) {
    var query = Object.keys(req.query);
-
-
-    switch(JSON.stringify(query)) {
+   var name;
+  //  return JSON.stringify(query[0]);
+  if(!data) {
+    switch(query[0]) {
       case "document_id":
         name = "document_id"
         break;
@@ -124,7 +125,7 @@ function(doc, req) {
         break;
       default:
         name = "something went wrong"
-}
+    }
 
 
 
@@ -140,7 +141,7 @@ function(doc, req) {
         }
       };
 
-
+   }
       clearFields(data);
 
     return {
