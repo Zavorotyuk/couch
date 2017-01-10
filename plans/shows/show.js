@@ -26,7 +26,7 @@ function(doc, req) {
     return obj;
   }
 ​
-function formatResponse(data, req) {
+function formatResponse(data) {
    if (!data){
      if (req.query.document_id)
        var name = 'document_id';
@@ -94,5 +94,5 @@ function formatResponse(data, req) {
       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
 ​
-  return formatResponse( getField(doc), req );
+  return formatResponse( getField(doc) );
 }
