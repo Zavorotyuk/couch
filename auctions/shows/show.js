@@ -62,11 +62,53 @@ function(doc, req) {
     return obj;
   }
 
-  function formatResponse(data) {
-    if (!data)
-      return {code:404};
+  function formatResponse(data, req, schema) {
+   var query = Object.keys(req.query);
+   var name;
+  //  return JSON.stringify(query[0]);
+  if(!data) {
+    switch(query[0]) {
+      case "document_id":
+        name = "document_id"
+        break;
+      case "award_id":
+        name = "award_id"
+        break;
+      case "bid_id":
+        name = "bid_id"
+        break;
+      case "cancellation_id":
+        name = "cancellation_id"
+        break;
+      case "complaint_id":
+        name = "complaint_id"
+        break;
+      case "contract_id":
+        name = "contract_id"
+        break;
+      case "lot_id":
+        name = "lot_id"
+        break;
+      case "question_id":
+        name = "question_id"
+        break;
+      default:
+    }
 
-    clearFields(data);
+      return {
+        code: 404,
+        json: {
+            "status": "error",
+            "errors":[{
+                "location": "url",
+                "name": name,
+                "description": "Not found"
+            }]
+        }
+      };
+
+   }
+      clearFields(data);
 
     return {
       body: JSON.stringify({data:data}),
@@ -114,5 +156,5 @@ function(doc, req) {
       data[FIELDS_TO_CLEAR[key]] && delete data[FIELDS_TO_CLEAR[key]];
   }
 
-  return formatResponse( getField(SCHEMA, doc) );
+  return formatResponse( getField(SCHEMA, doc), req, SCHEMA );
 }

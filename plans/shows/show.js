@@ -26,32 +26,32 @@ function(doc, req) {
     return obj;
   }
 ​
-  function formatResponse(data, req) {
-    if (!data){
-      if (req.query.document_id)
-        var name = 'document_id';
-      else
-        var name = 'plan_id';
-      return {
-        code: 404,
-        json: {
-            "status": "error",
-            "errors":[{
-                "location": "url",
-                "name": name,
-                "description": "Not found"
-            }]
-        }
-      };
-    }
-​
-    clearFields(data);
-​
-    return {
-      body: JSON.stringify({data:data}),
-      headers: {"Content-Type": "text/plain; charset=utf-8"}
-    };
-  }
+function formatResponse(data, req) {
+   if (!data){
+     if (req.query.document_id)
+       var name = 'document_id';
+     else
+       var name = 'plan_id';
+     return {
+       code: 404,
+       json: {
+           "status": "error",
+           "errors":[{
+               "location": "url",
+               "name": name,
+               "description": "Not found"
+           }]
+       }
+     };
+   }
+
+     clearFields(data);
+
+   return {
+     body: JSON.stringify({data:data}),
+     headers: {"Content-Type": "text/plain; charset=utf-8"}
+   };
+ }
 ​
   function groupDocuments(docs){
     var result = [];
