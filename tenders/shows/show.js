@@ -77,22 +77,21 @@ function(doc, req) {
 
   function formatResponse(data, req, schema) {
    var query = Object.keys(req.query);
+   var key = query[query.length -1]
    var name;
 
-  //  return JSON.stringify(query[0]);
   if(!data) {
-    
-    if(req.query[query] == '*') {
+
+    if(req.query[key] == '*') {
       return {
         body: JSON.stringify({data:[]}),
         headers: {"Content-Type": "text/plain; charset=utf-8"}
       };
     }
 
-    if(query.length > 0)
-       query.length == 1 ? query = query[0] : query = query[query.length - 1]
 
-    switch(query) {
+
+    switch(key) {
       case "document_id":
         name = "document_id"
         break;
